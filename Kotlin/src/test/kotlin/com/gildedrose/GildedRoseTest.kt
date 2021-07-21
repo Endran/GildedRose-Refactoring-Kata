@@ -5,24 +5,6 @@ import org.junit.jupiter.api.Test
 
 internal class GildedRoseTest {
 
-/*
-    - Once the sell by date has passed, Quality degrades twice as fast
-    - The Quality of an item is never negative
-    - Min quality = 0
-    - Max quality = 50
-    - Alter quality by
-        - Brie: +1
-        - Sulfuras: 0
-        - Backstage: by sellin:
-            - <= 3 -> +5
-            - <= 10 -> +2
-            - <=0 -> quality to 0
-            - > 10 -> +1
-        - Conjured -2
-        - Other -1
-
- */
-
     @Test
     fun `regular item degrades by 1 before sell date`() {
         val app = GildedRose(listOf(Item("NORMAL_ITEM", 10, 10)))
@@ -67,6 +49,21 @@ internal class GildedRoseTest {
         app.updateQuality()
 
         assertThat(app.items).containsExactly(Item(GildedRose.BRIE, -3, 12))
+    }
+
+    @Test
+    fun `conjured item degrades at double rate normal item`() {
+        val app = GildedRose(listOf(
+                Item(GildedRose.CONJURED, 10, 10),
+                Item(GildedRose.CONJURED, -10, 10)
+        ))
+
+        app.updateQuality()
+
+        assertThat(app.items).containsExactly(
+                Item(GildedRose.CONJURED, 9, 8),
+                Item(GildedRose.CONJURED, -11, 6),
+        )
     }
 
     @Test

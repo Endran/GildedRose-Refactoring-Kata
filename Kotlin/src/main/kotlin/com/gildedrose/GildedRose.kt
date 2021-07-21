@@ -48,33 +48,32 @@ class GildedRose(var items: List<Item>) {
         val BRIE = "Aged Brie"
         val SULFURAS = "Sulfuras, Hand of Ragnaros"
         val BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert"
+        val CONJURED = "Conjured Mana Cake"
     }
 
     fun updateQuality() {
         items = items.map {
-            if (it.name == SULFURAS) return@map it.copy(quality = 80)
-            return@map it.copy(sellIn = it.sellIn - 1, quality = determineQuality(it))
+            when (it.name) {
+                SULFURAS -> it.copy(quality = 80)
+                else -> it.copy(sellIn = it.sellIn - 1, quality = determineQuality(it))
+            }
         }
     }
 
     private fun determineQuality(item: Item): Int {
-        if (item.name === SULFURAS) {
-            return 80
-        }
-
         var modifier = if (item.sellIn > 0) -1 else -2
-        if (item.name === BRIE) modifier *= -1
-        else if (item.name === BACKSTAGE) {
-            modifier = when {
-                item.sellIn > 10 -> 1
-                item.sellIn > 5 -> 2
-                item.sellIn > 0 -> 3
-                else -> -item.quality
-            }
+        when (item.name) {
+            BRIE -> modifier *= -1
+            CONJURED -> modifier *= 2
+            BACKSTAGE ->
+                modifier = when {
+                    item.sellIn > 10 -> 1
+                    item.sellIn > 5 -> 2
+                    item.sellIn > 0 -> 3
+                    else -> -item.quality
+                }
         }
 
         return (item.quality + modifier).coerceIn(0, 50)
     }
-
 }
-
