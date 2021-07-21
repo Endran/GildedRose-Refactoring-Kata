@@ -14,6 +14,7 @@ repositories {
 dependencies {
 	implementation(kotlin("stdlib"))
 	testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
+	testImplementation("org.assertj:assertj-core:3.20.2")
 }
 
 tasks.test {
