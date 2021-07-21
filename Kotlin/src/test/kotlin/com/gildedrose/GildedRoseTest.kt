@@ -144,7 +144,7 @@ internal class GildedRoseTest {
         ))
 
         app.updateQuality()
-        
+
         assertThat(app.items).containsExactly(
                 Item("NORMAL_ITEM", 9, 0),
                 Item(GildedRose.BACKSTAGE, -1, 0),
