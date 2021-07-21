@@ -110,12 +110,13 @@ internal class GildedRoseTest {
 
     @Test
     fun `Backstage passes by 3 between 0 and 5 days to sell`() {
-        val items = listOf(
+        val app = GildedRose(listOf(
                 Item(GildedRose.BACKSTAGE, 5, 10),
                 Item(GildedRose.BACKSTAGE, 1, 10)
-        )
-        val app = GildedRose(items)
+        ))
+
         app.updateQuality()
+
         assertThat(app.items).containsExactly(
                 Item(GildedRose.BACKSTAGE, 4, 13),
                 Item(GildedRose.BACKSTAGE, 0, 13),
@@ -124,11 +125,12 @@ internal class GildedRoseTest {
 
     @Test
     fun `Backstage drop to 0 past selling date`() {
-        val items = listOf(
+        val app = GildedRose(listOf(
                 Item(GildedRose.BACKSTAGE, 0, 10),
-        )
-        val app = GildedRose(items)
+        ))
+
         app.updateQuality()
+
         assertThat(app.items).containsExactly(
                 Item(GildedRose.BACKSTAGE, -1, 0),
         )
@@ -136,12 +138,13 @@ internal class GildedRoseTest {
 
     @Test
     fun `value of item is never negative`() {
-        val items = listOf(
+        val app = GildedRose(listOf(
                 Item("NORMAL_ITEM", 10, 0),
                 Item(GildedRose.BACKSTAGE, 0, -1),
-        )
-        val app = GildedRose(items)
+        ))
+
         app.updateQuality()
+        
         assertThat(app.items).containsExactly(
                 Item("NORMAL_ITEM", 9, 0),
                 Item(GildedRose.BACKSTAGE, -1, 0),
