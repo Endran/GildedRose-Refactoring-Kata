@@ -32,15 +32,15 @@ internal class GildedRoseTest {
         assertThat(app.items).containsExactly(Item("NORMAL_ITEM", 9, 9))
     }
 
-//    @Test
-//    fun `item is never above 50`() {
-//        val app = GildedRose(listOf(Item("NORMAL_ITEM", 10, 100)))
-//
-//        app.updateQuality()
-//
-//        assertThat(app.items).containsExactly(Item("NORM5AL_ITEM", 9, 510)
-//        )
-//    }
+    @Test
+    fun `item is never above 50`() {
+        val app = GildedRose(listOf(Item("NORMAL_ITEM", 10, 100)))
+
+        app.updateQuality()
+
+        assertThat(app.items).containsExactly(Item("NORMAL_ITEM", 9, 50)
+        )
+    }
 
     @Test
     fun `regular item degrades by 2 after sell date`() {
@@ -78,14 +78,14 @@ internal class GildedRoseTest {
         assertThat(app.items).containsExactly(Item(GildedRose.SULFURAS, 10, 80))
     }
 
-//    @Test
-//    fun `Sulfuras is always quality 80`() {
-//        val app = GildedRose(listOf(Item(GildedRose.SULFURAS, 10, 0)))
-//
-//        app.updateQuality()
-//
-//        assertThat(app.items).containsExactly(Item(GildedRose.SULFURAS, 10, 80))
-//    }
+    @Test
+    fun `Sulfuras is always quality 80`() {
+        val app = GildedRose(listOf(Item(GildedRose.SULFURAS, 10, 0)))
+
+        app.updateQuality()
+
+        assertThat(app.items).containsExactly(Item(GildedRose.SULFURAS, 10, 80))
+    }
 
     @Test
     fun `Backstage passes increase by 1 before 10 days to sell`() {
@@ -112,7 +112,7 @@ internal class GildedRoseTest {
     }
 
     @Test
-    fun `Backstage passes by 5 between 0 and 5 days to sell`() {
+    fun `Backstage passes by 3 between 0 and 5 days to sell`() {
         val items = listOf(
                 Item(GildedRose.BACKSTAGE, 5, 10),
                 Item(GildedRose.BACKSTAGE, 1, 10)

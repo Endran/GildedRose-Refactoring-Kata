@@ -51,55 +51,29 @@ class GildedRose(var items: List<Item>) {
     }
 
     fun updateQuality() {
-        for (i in items.indices) {
-            if (items[i].name != "Aged Brie" && items[i].name != "Backstage passes to a TAFKAL80ETC concert") {
-                if (items[i].quality > 0) {
-                    if (items[i].name != "Sulfuras, Hand of Ragnaros") {
-                        items[i].quality = items[i].quality - 1
-                    }
-                }
-            } else {
-                if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1
+        items = items.map {
+            if (it.name == SULFURAS) return@map it.copy(quality = 80)
+            return@map it.copy(sellIn = it.sellIn - 1, quality = determineQuality(it))
+        }
+    }
 
-                    if (items[i].name == "Backstage passes to a TAFKAL80ETC concert") {
-                        if (items[i].sellIn < 11) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1
-                            }
-                        }
+    private fun determineQuality(item: Item): Int {
+        if (item.name === SULFURAS) {
+            return 80
+        }
 
-                        if (items[i].sellIn < 6) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (items[i].name != "Sulfuras, Hand of Ragnaros") {
-                items[i].sellIn = items[i].sellIn - 1
-            }
-
-            if (items[i].sellIn < 0) {
-                if (items[i].name != "Aged Brie") {
-                    if (items[i].name != "Backstage passes to a TAFKAL80ETC concert") {
-                        if (items[i].quality > 0) {
-                            if (items[i].name != "Sulfuras, Hand of Ragnaros") {
-                                items[i].quality = items[i].quality - 1
-                            }
-                        }
-                    } else {
-                        items[i].quality = items[i].quality - items[i].quality
-                    }
-                } else {
-                    if (items[i].quality < 50) {
-                        items[i].quality = items[i].quality + 1
-                    }
-                }
+        var modifier = if (item.sellIn > 0) -1 else -2
+        if (item.name === BRIE) modifier *= -1
+        else if (item.name === BACKSTAGE) {
+            modifier = when {
+                item.sellIn > 10 -> 1
+                item.sellIn > 5 -> 2
+                item.sellIn > 0 -> 3
+                else -> -item.quality
             }
         }
+
+        return (item.quality + modifier).coerceIn(0, 50)
     }
 
 }
