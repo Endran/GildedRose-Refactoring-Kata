@@ -25,7 +25,7 @@ internal class GildedRoseTest {
 
     @Test
     fun `regular item degrades by 1 before sell date`() {
-        val app = GildedRose(arrayOf(Item("NORMAL_ITEM", 10, 10)))
+        val app = GildedRose(listOf(Item("NORMAL_ITEM", 10, 10)))
 
         app.updateQuality()
 
@@ -34,7 +34,7 @@ internal class GildedRoseTest {
 
 //    @Test
 //    fun `item is never above 50`() {
-//        val app = GildedRose(arrayOf(Item("NORMAL_ITEM", 10, 100)))
+//        val app = GildedRose(listOf(Item("NORMAL_ITEM", 10, 100)))
 //
 //        app.updateQuality()
 //
@@ -44,7 +44,7 @@ internal class GildedRoseTest {
 
     @Test
     fun `regular item degrades by 2 after sell date`() {
-        val app = GildedRose(arrayOf(Item("NORMAL_ITEM", -2, 10)))
+        val app = GildedRose(listOf(Item("NORMAL_ITEM", -2, 10)))
 
         app.updateQuality()
 
@@ -53,7 +53,7 @@ internal class GildedRoseTest {
 
     @Test
     fun `brie item increases by 1 before sell date`() {
-        val app = GildedRose(arrayOf(Item(GildedRose.BRIE, 10, 10)))
+        val app = GildedRose(listOf(Item(GildedRose.BRIE, 10, 10)))
 
         app.updateQuality()
 
@@ -62,7 +62,7 @@ internal class GildedRoseTest {
 
     @Test
     fun `brie item increases by 2 after sell date`() {
-        val app = GildedRose(arrayOf(Item(GildedRose.BRIE, -2, 10)))
+        val app = GildedRose(listOf(Item(GildedRose.BRIE, -2, 10)))
 
         app.updateQuality()
 
@@ -71,7 +71,7 @@ internal class GildedRoseTest {
 
     @Test
     fun `Sulfuras is an exception to all rules`() {
-        val app = GildedRose(arrayOf(Item(GildedRose.SULFURAS, 10, 80)))
+        val app = GildedRose(listOf(Item(GildedRose.SULFURAS, 10, 80)))
 
         app.updateQuality()
 
@@ -80,7 +80,7 @@ internal class GildedRoseTest {
 
 //    @Test
 //    fun `Sulfuras is always quality 80`() {
-//        val app = GildedRose(arrayOf(Item(GildedRose.SULFURAS, 10, 0)))
+//        val app = GildedRose(listOf(Item(GildedRose.SULFURAS, 10, 0)))
 //
 //        app.updateQuality()
 //
@@ -89,7 +89,7 @@ internal class GildedRoseTest {
 
     @Test
     fun `Backstage passes increase by 1 before 10 days to sell`() {
-        val app = GildedRose(arrayOf(Item(GildedRose.BACKSTAGE, 11, 10)))
+        val app = GildedRose(listOf(Item(GildedRose.BACKSTAGE, 11, 10)))
 
         app.updateQuality()
 
@@ -98,7 +98,7 @@ internal class GildedRoseTest {
 
     @Test
     fun `Backstage passes increase by 2 between 6 and 9 days to sell`() {
-        val app = GildedRose(arrayOf(
+        val app = GildedRose(listOf(
                 Item(GildedRose.BACKSTAGE, 9, 10),
                 Item(GildedRose.BACKSTAGE, 6, 10)
         ))
@@ -113,7 +113,7 @@ internal class GildedRoseTest {
 
     @Test
     fun `Backstage passes by 5 between 0 and 5 days to sell`() {
-        val items = arrayOf(
+        val items = listOf(
                 Item(GildedRose.BACKSTAGE, 5, 10),
                 Item(GildedRose.BACKSTAGE, 1, 10)
         )
@@ -127,7 +127,7 @@ internal class GildedRoseTest {
 
     @Test
     fun `Backstage drop to 0 past selling date`() {
-        val items = arrayOf(
+        val items = listOf(
                 Item(GildedRose.BACKSTAGE, 0, 10),
         )
         val app = GildedRose(items)
@@ -139,7 +139,7 @@ internal class GildedRoseTest {
 
     @Test
     fun `value of item is never negative`() {
-        val items = arrayOf(
+        val items = listOf(
                 Item("NORMAL_ITEM", 10, 0),
                 Item(GildedRose.BACKSTAGE, 0, -1),
         )
@@ -153,7 +153,7 @@ internal class GildedRoseTest {
 
     @Test
     fun `value of item is never increases 50`() {
-        val app = GildedRose(arrayOf(
+        val app = GildedRose(listOf(
                 Item(GildedRose.BRIE, 10, 50),
                 Item(GildedRose.BACKSTAGE, 2, 50),
                 Item(GildedRose.BACKSTAGE, 7, 50),
