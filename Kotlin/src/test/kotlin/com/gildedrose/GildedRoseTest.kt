@@ -70,24 +70,6 @@ internal class GildedRoseTest {
     }
 
     @Test
-    fun `value of item is never negative`() {
-        val app = GildedRose(arrayOf(Item("NORMAL_ITEM", 10, 0)))
-
-        app.updateQuality()
-
-        assertThat(app.items).containsExactly(Item("NORMAL_ITEM", 9, 0))
-    }
-
-    @Test
-    fun `value of item is never increases 50`() {
-        val app = GildedRose(arrayOf(Item(GildedRose.BRIE, 10, 50)))
-
-        app.updateQuality()
-
-        assertThat(app.items).containsExactly(Item(GildedRose.BRIE, 9, 50))
-    }
-
-    @Test
     fun `Sulfuras is an exception to all rules`() {
         val app = GildedRose(arrayOf(Item(GildedRose.SULFURAS, 10, 80)))
 
@@ -152,6 +134,39 @@ internal class GildedRoseTest {
         app.updateQuality()
         assertThat(app.items).containsExactly(
                 Item(GildedRose.BACKSTAGE, -1, 0),
+        )
+    }
+
+    @Test
+    fun `value of item is never negative`() {
+        val items = arrayOf(
+                Item("NORMAL_ITEM", 10, 0),
+                Item(GildedRose.BACKSTAGE, 0, -1),
+        )
+        val app = GildedRose(items)
+        app.updateQuality()
+        assertThat(app.items).containsExactly(
+                Item("NORMAL_ITEM", 9, 0),
+                Item(GildedRose.BACKSTAGE, -1, 0),
+        )
+    }
+
+    @Test
+    fun `value of item is never increases 50`() {
+        val app = GildedRose(arrayOf(
+                Item(GildedRose.BRIE, 10, 50),
+                Item(GildedRose.BACKSTAGE, 2, 50),
+                Item(GildedRose.BACKSTAGE, 7, 50),
+                Item(GildedRose.BACKSTAGE, 11, 50),
+        ))
+
+        app.updateQuality()
+
+        assertThat(app.items).containsExactly(
+                Item(GildedRose.BRIE, 9, 50),
+                Item(GildedRose.BACKSTAGE, 1, 50),
+                Item(GildedRose.BACKSTAGE, 6, 50),
+                Item(GildedRose.BACKSTAGE, 10, 50),
         )
     }
 }
